@@ -17,7 +17,7 @@ namespace Graphs
         protected bool isnull;
 
         protected static int num = 0;
-        public static Edge NULL = new Edge(true);
+        protected static Edge NULL = new Edge(true);
 
         public Edge() 
         {
@@ -43,6 +43,7 @@ namespace Graphs
 
         public Edge(string _name, Vertex _v1, Vertex _v2, Position _position)
         {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
             v1 = _v1;
             v2 = _v2;
             position = _position;
@@ -54,6 +55,7 @@ namespace Graphs
 
         public Edge(string _name, Vertex _v1, Vertex _v2, int _x, int _y)
         {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
             v1 = _v1;
             v2 = _v2;
             position = new Position(_x, _y);
@@ -122,6 +124,7 @@ namespace Graphs
 
         public WeightedEdge(string _name, Vertex _v1, Vertex _v2, double _weight, Position _position)
         {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
             name = _name;
             weight = _weight;
             position = _position;
@@ -134,6 +137,7 @@ namespace Graphs
 
         public WeightedEdge(string _name, Vertex _v1, Vertex _v2, double _weight, int _x, int _y)
         {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
             name = _name;
             weight = _weight;
             position = new Position( _x, _y );

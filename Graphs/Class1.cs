@@ -7,7 +7,9 @@
         public int id { get; set; }
         private bool isnull;
 
-        public static Vertex NULL = new Vertex(true);
+        protected List<Vertex> adjacents { get; set; }
+
+        protected static Vertex NULL = new Vertex(true);
         protected static int num = 0;
 
         public Vertex()
@@ -17,6 +19,7 @@
             id = Vertex.num;
             Vertex.num++;
             isnull = false;
+            adjacents = new List<Vertex>();
         }
 
         public Vertex(string _name)
@@ -26,6 +29,7 @@
             id = Vertex.num;
             Vertex.num++;
             isnull = false;
+            adjacents = new List<Vertex>();
         }
 
         public Vertex(string _name, int _x, int _y)
@@ -35,6 +39,7 @@
             id = Vertex.num;
             Vertex.num++;
             isnull = false;
+            adjacents = new List<Vertex>();
         }
 
         public Vertex(string _name, Position _position)
@@ -44,6 +49,7 @@
             id = Vertex.num;
             Vertex.num++;
             isnull = false;
+            adjacents = new List<Vertex>();
         }
 
         private Vertex(bool isnull)
@@ -52,6 +58,38 @@
             position = new Position();
             id = -1;
             isnull = true;
+            adjacents = new List<Vertex>();
+        }
+
+        public int GetAdjacentIndex(Vertex adj)
+        {
+            int index = 0;
+            foreach(Vertex v in adjacents)
+            {
+                if(v == adj)
+                {
+                    return index;
+                }
+                index++;
+            }
+            return -1;
+        }
+
+        public void AddAdjacent(Vertex adj)
+        {
+            if(GetAdjacentIndex(adj) == -1)
+            {
+                adjacents.Add(adj);
+            }
+        }
+
+        public void RemoveAdjacent(Vertex adj)
+        {
+            int index = GetAdjacentIndex(adj);
+            if(index != -1)
+            {
+                adjacents.RemoveAt(index);
+            }
         }
 
         public bool IsNull()
@@ -89,7 +127,7 @@
 
         public static bool operator !=(Vertex a, Vertex b)
         {
-            if (a.id != b.id) return true; else return false;
+            if(a.id != b.id) return true; else return false;
         }
     }
 }
