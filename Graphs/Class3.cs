@@ -30,41 +30,6 @@ namespace Graphs
             isnull = false;
         }
 
-        public Edge(string _name)
-        {
-            v1 = new Vertex();
-            v2 = new Vertex();
-            position = new Position();
-            name = _name;
-            id = Edge.num;
-            Edge.num++;
-            isnull = false;
-        }
-
-        public Edge(string _name, Vertex _v1, Vertex _v2, Position _position)
-        {
-            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
-            v1 = _v1;
-            v2 = _v2;
-            position = _position;
-            name = _name;
-            id = Edge.num;
-            Edge.num++;
-            isnull = false;
-        }
-
-        public Edge(string _name, Vertex _v1, Vertex _v2, int _x, int _y)
-        {
-            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
-            v1 = _v1;
-            v2 = _v2;
-            position = new Position(_x, _y);
-            name = _name;
-            id = Edge.num;
-            Edge.num++;
-            isnull = false;
-        }
-
         private Edge(bool _isnull)
         {
             v1 = new Vertex();
@@ -116,11 +81,85 @@ namespace Graphs
         }
     }
 
+    public class WeightlessEdge : Edge
+    {
+        public WeightlessEdge()
+        {
+            v1 = new Vertex();
+            v2 = new Vertex();
+            position = new Position();
+            name = string.Empty;
+            id = WeightlessEdge.num;
+            WeightlessEdge.num++;
+            isnull = false;
+        }
+
+        public WeightlessEdge(string _name, Vertex _v1, Vertex _v2, Position _position)
+        {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
+            v1 = _v1;
+            v2 = _v2;
+            position = _position;
+            name = _name;
+            id = Edge.num;
+            Edge.num++;
+            isnull = false;
+        }
+
+        public WeightlessEdge(string _name, Vertex _v1, Vertex _v2, int _x, int _y)
+        {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
+            v1 = _v1;
+            v2 = _v2;
+            position = new Position(_x, _y);
+            name = _name;
+            id = Edge.num;
+            Edge.num++;
+            isnull = false;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("WeightlessEdge {0}: {1} {2}", id, name, position);
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 17 + id;
+            foreach (char c in name)
+            {
+                hash *= 17 + c;
+            }
+            hash += v1.GetHashCode();
+            hash += v2.GetHashCode();
+            hash += position.GetHashCode();
+            return hash;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || typeof(WeightlessEdge) != obj.GetType()) return false;
+            WeightlessEdge we = (WeightlessEdge)obj;
+            if (id != we.id) return false; else return true;
+        }
+    }
+
     public class WeightedEdge : Edge
     {
         public double weight { get; set; }
 
         protected static int wnum = 0;
+
+        public WeightedEdge()
+        {
+            v1 = new Vertex();
+            v2 = new Vertex();
+            position = new Position();
+            name = string.Empty;
+            id = WeightedEdge.num;
+            WeightedEdge.num++;
+            isnull = false;
+        }
 
         public WeightedEdge(string _name, Vertex _v1, Vertex _v2, double _weight, Position _position)
         {
