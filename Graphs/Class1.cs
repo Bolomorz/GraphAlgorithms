@@ -7,9 +7,9 @@
         public int id { get; set; }
         private bool isnull;
 
-        protected List<Vertex> adjacents { get; set; }
+        public List<Vertex> adjacents { get; set; }
 
-        protected static Vertex NULL = new Vertex(true);
+        public static Vertex NULL = new Vertex(true);
         protected static int num = 0;
 
         public Vertex()
