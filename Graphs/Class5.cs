@@ -12,15 +12,15 @@ namespace Graphs
         {
             public double distance { get; set; }
             public Vertex vertex { get; set; }
-            public Vertex predecessor { get; set; }
+            public Vertex? predecessor { get; set; }
             public List<Vertex> shortestpath { get; set; }
 
             public DijkstraElement(Vertex _vertex)
             {
-                distance = double.MaxValue;
+                distance = double.PositiveInfinity;
                 vertex = _vertex;
                 shortestpath = new List<Vertex>();
-                predecessor = Vertex.NULL;
+                predecessor = null;
             }
         }
 
@@ -31,7 +31,7 @@ namespace Graphs
 
         public Dijkstra(WeightedDirectedGraph _graph, Vertex _startvertex)
         {
-            this.graph = _graph;
+            graph = _graph;
             Q = new List<Vertex>();
             elements = new List<DijkstraElement>();
             startvertex = _startvertex;
@@ -80,7 +80,7 @@ namespace Graphs
 
         private int IndexOfVertexWithSmallestDistanceInQ()
         {
-            var dist = double.MaxValue;
+            var dist = double.PositiveInfinity;
             var index = -1;
             var count = 0;
             foreach(var u in Q)
@@ -149,7 +149,7 @@ namespace Graphs
             path.Add(v);
             var u = v;
             var index = IndexOfVertexInElements(u);
-            while (!elements[index].predecessor.IsNull())
+            while (elements[index].predecessor is not null)
             {
                 u = elements[index].predecessor;
                 path.Insert(index, u);

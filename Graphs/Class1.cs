@@ -5,11 +5,9 @@
         public string name {  get; set; }
         public Position position { get; set; }
         public int id { get; set; }
-        private bool isnull;
 
         public List<Vertex> adjacents { get; set; }
 
-        public static Vertex NULL = new Vertex(true);
         protected static int num = 0;
 
         public Vertex()
@@ -18,7 +16,6 @@
             position = new Position();
             id = Vertex.num;
             Vertex.num++;
-            isnull = false;
             adjacents = new List<Vertex>();
         }
 
@@ -28,7 +25,6 @@
             position = new Position();
             id = Vertex.num;
             Vertex.num++;
-            isnull = false;
             adjacents = new List<Vertex>();
         }
 
@@ -38,7 +34,6 @@
             position = new Position(_x, _y);
             id = Vertex.num;
             Vertex.num++;
-            isnull = false;
             adjacents = new List<Vertex>();
         }
 
@@ -48,16 +43,6 @@
             position = _position;
             id = Vertex.num;
             Vertex.num++;
-            isnull = false;
-            adjacents = new List<Vertex>();
-        }
-
-        private Vertex(bool isnull)
-        {
-            name = string.Empty;
-            position = new Position();
-            id = -1;
-            isnull = true;
             adjacents = new List<Vertex>();
         }
 
@@ -90,11 +75,6 @@
             {
                 adjacents.RemoveAt(index);
             }
-        }
-
-        public bool IsNull()
-        {
-            return isnull;
         }
 
         public override string ToString()
