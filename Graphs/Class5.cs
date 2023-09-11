@@ -152,29 +152,32 @@ namespace Graphs
             while (elements[index].predecessor is not null)
             {
                 u = elements[index].predecessor;
-                path.Insert(index, u);
-                index = IndexOfVertexInElements(u);
+                if (u is not null)
+                {
+                    path.Insert(index, u);
+                    index = IndexOfVertexInElements(u);
+                }
             }
             return path;
         }
 
-        public List<Tuple<Vertex, double, Vertex, List<Vertex>>> GetElements()
+        public List<Tuple<Vertex, double, Vertex?, List<Vertex>>> GetElements()
         {
-            List<Tuple<Vertex, double, Vertex, List<Vertex>>> ele = new List<Tuple<Vertex, double, Vertex, List<Vertex>>>();
+            List<Tuple<Vertex, double, Vertex?, List<Vertex>>> ele = new List<Tuple<Vertex, double, Vertex?, List<Vertex>>>();
             foreach(var element in  elements)
             {
-                ele.Add(new Tuple<Vertex, double, Vertex, List<Vertex>>(element.vertex, element.distance, element.predecessor, element.shortestpath));
+                ele.Add(new Tuple<Vertex, double, Vertex?, List<Vertex>>(element.vertex, element.distance, element.predecessor, element.shortestpath));
             }
             return ele;
         }
 
-        public Tuple<Vertex, double, Vertex, List<Vertex>>? GetElement(Vertex endvertex)
+        public Tuple<Vertex, double, Vertex?, List<Vertex>>? GetElement(Vertex endvertex)
         {
             foreach(var element in  elements)
             {
                 if(element.vertex == endvertex)
                 {
-                    return new Tuple<Vertex, double, Vertex, List<Vertex>>(element.vertex, element.distance, element.predecessor, element.shortestpath);
+                    return new Tuple<Vertex, double, Vertex?, List<Vertex>>(element.vertex, element.distance, element.predecessor, element.shortestpath);
                 }
             }
             return null;

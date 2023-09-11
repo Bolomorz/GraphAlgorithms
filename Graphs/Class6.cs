@@ -115,23 +115,23 @@ namespace Graphs
             }
         }
 
-        public List<Tuple<Vertex, double, Vertex>> GetElements()
+        public List<Tuple<Vertex, double, Vertex?>> GetElements()
         {
-            var elist = new List<Tuple<Vertex, double, Vertex>>();
+            var elist = new List<Tuple<Vertex, double, Vertex?>>();
             foreach(var element in elements)
             {
-                elist.Add(new Tuple<Vertex, double, Vertex>(element.vertex, element.distance, element.predecessor));
+                elist.Add(new Tuple<Vertex, double, Vertex?>(element.vertex, element.distance, element.predecessor));
             }
             return elist;
         }
 
-        public Tuple<Vertex, double, Vertex>? GetElement(Vertex endvertex)
+        public Tuple<Vertex, double, Vertex?>? GetElement(Vertex endvertex)
         {
             foreach(var element in elements)
             {
                 if(element.vertex == endvertex)
                 {
-                    return new Tuple<Vertex, double, Vertex>(element.vertex, element.distance, element.predecessor);
+                    return new Tuple<Vertex, double, Vertex?>(element.vertex, element.distance, element.predecessor);
                 }
             }
             return null;
