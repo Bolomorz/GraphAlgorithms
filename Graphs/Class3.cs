@@ -14,7 +14,7 @@ namespace Graphs
         public string name { get; set; }
         public Position position { get; set; }
         public int id { get; set; }
-        public double weight { get; set; }
+        public double? weight { get; set; }
 
         protected static int num = 0;
 
@@ -36,7 +36,7 @@ namespace Graphs
             v2 = _v2;
             position = _position;
             name = _name;
-            weight = 0;
+            weight = null;
             id = Edge.num;
             Edge.num++;
         }
@@ -48,7 +48,7 @@ namespace Graphs
             v2 = _v2;
             position = new Position(_x, _y);
             name = _name;
-            weight = 0;
+            weight = null;
             id = Edge.num;
             Edge.num++;
         }
