@@ -124,7 +124,7 @@ namespace Graphs
             var djeu = elements[IndexOfVertexInElements(u)];
             var djev = elements[IndexOfVertexInElements(v)];
             var alt = djeu.distance + WeightingOfEdge(u, v);
-            if(alt < djev.distance && alt != null)
+            if(alt < djev.distance && alt is not null)
             {
                 djev.distance = (double)alt;
                 djev.predecessor = u;
