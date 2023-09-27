@@ -149,12 +149,16 @@ namespace Graphs
             path.Add(v);
             var u = v;
             var index = IndexOfVertexInElements(u);
-            while (elements[index].predecessor is not null)
+            while (true)
             {
-                u = elements[index].predecessor;
-                if (u is not null)
+                if (elements[index].predecessor is null)
                 {
-                    path.Insert(index, u);
+                    break;
+                }
+                else
+                {
+                    u = elements[index].predecessor;
+                    path.Insert(0, u);
                     index = IndexOfVertexInElements(u);
                 }
             }

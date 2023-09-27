@@ -42,6 +42,7 @@ namespace Graphs
             {
                 var bfe = new BFElement(ver);
                 if (ver == startvertex) bfe.distance = 0;
+                elements.Add(bfe);
             }
         }
 
@@ -57,7 +58,7 @@ namespace Graphs
                     {
                         if (elements[iu].distance + edg.weight < elements[iv].distance)
                         {
-                            elements[iv].distance = elements[iu].distance * edg.weight;
+                            elements[iv].distance = elements[iu].distance + edg.weight;
                             elements[iv].predecessor = elements[iu].vertex;
                         }
                     }
