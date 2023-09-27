@@ -56,9 +56,9 @@ namespace Graphs
                     var iv = IndexOfVertex(edg.v2);
                     if (iu != -1 && iv != -1)
                     {
-                        if (elements[iu].distance + edg.weight < elements[iv].distance)
+                        if (elements[iu].distance + edg.weight < elements[iv].distance && edg.weight is not null)
                         {
-                            elements[iv].distance = elements[iu].distance + edg.weight;
+                            elements[iv].distance = elements[iu].distance + (double)edg.weight;
                             elements[iv].predecessor = elements[iu].vertex;
                         }
                     }
