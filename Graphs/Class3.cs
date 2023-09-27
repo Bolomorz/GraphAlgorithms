@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Graphs
 {
-    public abstract class Edge
+    public class Edge
     {
         public Vertex v1 {  get; set; }
         public Vertex v2 { get; set; }
         public string name { get; set; }
         public Position position { get; set; }
         public int id { get; set; }
+        public double weight { get; set; }
 
         protected static int num = 0;
 
@@ -23,8 +24,58 @@ namespace Graphs
             v2 = new Vertex();
             position = new Position();
             name = string.Empty;
+            weight = 0;
             id = Edge.num;
             Edge.num++;
+        }
+
+        public Edge(string _name, Vertex _v1, Vertex _v2, Position _position)
+        {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
+            v1 = _v1;
+            v2 = _v2;
+            position = _position;
+            name = _name;
+            weight = 0;
+            id = Edge.num;
+            Edge.num++;
+        }
+
+        public Edge(string _name, Vertex _v1, Vertex _v2, int _x, int _y)
+        {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
+            v1 = _v1;
+            v2 = _v2;
+            position = new Position(_x, _y);
+            name = _name;
+            weight = 0;
+            id = Edge.num;
+            Edge.num++;
+        }
+
+        public Edge(string _name, Vertex _v1, Vertex _v2, double _weight, Position _position)
+        {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
+            name = _name;
+            weight = _weight;
+            position = _position;
+            v1 = _v1;
+            v2 = _v2;
+            id = Edge.num;
+            Edge.num++;
+        }
+
+        public Edge(string _name, Vertex _v1, Vertex _v2, double _weight, int _x, int _y)
+        {
+            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
+            name = _name;
+            weight = _weight;
+            position = new Position(_x, _y);
+            v1 = _v1;
+            v2 = _v2;
+            id = Edge.num;
+            Edge.num++;
+
         }
 
         public override string ToString()
@@ -60,132 +111,6 @@ namespace Graphs
         public static bool operator !=(Edge a, Edge b)
         {
             if (a.id != b.id) return true; else return false;
-        }
-    }
-
-    public class WeightlessEdge : Edge
-    {
-        public WeightlessEdge()
-        {
-            v1 = new Vertex();
-            v2 = new Vertex();
-            position = new Position();
-            name = string.Empty;
-            id = WeightlessEdge.num;
-            WeightlessEdge.num++;
-        }
-
-        public WeightlessEdge(string _name, Vertex _v1, Vertex _v2, Position _position)
-        {
-            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
-            v1 = _v1;
-            v2 = _v2;
-            position = _position;
-            name = _name;
-            id = Edge.num;
-            Edge.num++;
-        }
-
-        public WeightlessEdge(string _name, Vertex _v1, Vertex _v2, int _x, int _y)
-        {
-            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
-            v1 = _v1;
-            v2 = _v2;
-            position = new Position(_x, _y);
-            name = _name;
-            id = Edge.num;
-            Edge.num++;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("WeightlessEdge {0}: {1} {2}", id, name, position);
-        }
-
-        public override int GetHashCode()
-        {
-            int hash = 17 + id;
-            foreach (char c in name)
-            {
-                hash *= 17 + c;
-            }
-            hash += v1.GetHashCode();
-            hash += v2.GetHashCode();
-            hash += position.GetHashCode();
-            return hash;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || typeof(WeightlessEdge) != obj.GetType()) return false;
-            WeightlessEdge we = (WeightlessEdge)obj;
-            if (id != we.id) return false; else return true;
-        }
-    }
-
-    public class WeightedEdge : Edge
-    {
-        public double weight { get; set; }
-
-        public WeightedEdge()
-        {
-            v1 = new Vertex();
-            v2 = new Vertex();
-            position = new Position();
-            name = string.Empty;
-            id = WeightedEdge.num;
-            WeightedEdge.num++;
-        }
-
-        public WeightedEdge(string _name, Vertex _v1, Vertex _v2, double _weight, Position _position)
-        {
-            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
-            name = _name;
-            weight = _weight;
-            position = _position;
-            v1 = _v1;
-            v2 = _v2;
-            id = WeightedEdge.num;
-            WeightedEdge.num++;
-        }
-
-        public WeightedEdge(string _name, Vertex _v1, Vertex _v2, double _weight, int _x, int _y)
-        {
-            if (_v1 == _v2) throw new ArgumentException("cannot create edge with same vertices.");
-            name = _name;
-            weight = _weight;
-            position = new Position( _x, _y );
-            v1 = _v1;
-            v2 = _v2;
-            id = WeightedEdge.num;
-            WeightedEdge.num++;
-
-        }
-
-        public override string ToString()
-        {
-            return string.Format("WeightedEdge {0}: {1} {2}", id, name, position);
-        }
-
-        public override int GetHashCode()
-        {
-            int hash = 17 + id;
-            foreach (char c in name)
-            {
-                hash *= 17 + c;
-            }
-            hash += v1.GetHashCode();
-            hash += v2.GetHashCode();
-            hash += position.GetHashCode();
-            hash += (int)weight;
-            return hash;
-        }
-
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || typeof(WeightedEdge) != obj.GetType()) return false;
-            WeightedEdge we = (WeightedEdge)obj;
-            if (id != we.id) return false; else return true;
         }
     }
 }

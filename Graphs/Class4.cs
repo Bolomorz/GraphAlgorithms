@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Graphs
 {
-    public abstract class Graph
+    public class Graph
     {
         public List<Vertex> vertices {  get; set; }
         public List<Edge> edges { get; set; }
@@ -43,6 +43,72 @@ namespace Graphs
             }
         }
 
+        public int GetEdgeIndex(Edge edg)
+        {
+            int index = 0;
+            foreach (var e in edges)
+            {
+                if (e == edg)
+                {
+                    return index;
+                }
+                index++;
+            }
+            return -1;
+        }
+
+        public bool IsEdgeInGraph(Edge edg)
+        {
+            foreach (var e in edges)
+            {
+                if ((e.v1 == edg.v1 || e.v1 == edg.v2) && (e.v2 == edg.v1 || e.v2 == edg.v2))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void AddEdge(Edge edg)
+        {
+            if (GetEdgeIndex(edg) == -1)
+            {
+                if (!IsEdgeInGraph(edg))
+                {
+                    edges.Add(edg);
+                    AddVertex(edg.v1);
+                    AddVertex(edg.v2);
+                    edg.v1.AddAdjacent(edg.v2);
+                    edg.v2.AddAdjacent(edg.v1);
+                }
+            }
+        }
+
+        public void RemoveEdge(Edge edg)
+        {
+            int index = GetEdgeIndex(edg);
+            if (index != -1)
+            {
+                edges.RemoveAt(index);
+            }
+        }
+
+        public void RemoveVertex(Vertex ver)
+        {
+            int index = GetVertexIndex(ver);
+            if (index != -1)
+            {
+                foreach (var e in edges)
+                {
+                    if (e.v1 == ver || e.v2 == ver)
+                    {
+                        RemoveEdge(e);
+                    }
+                }
+                vertices.RemoveAt(index);
+            }
+        }
+
         public override string ToString()
         {
             return "graph";
@@ -70,213 +136,17 @@ namespace Graphs
         }
     }
 
-    public class WeightlessGraph : Graph
+    public class DirectedGraph : Graph
     {
-        public new List<WeightlessEdge> edges { get; set; }
-
-        public WeightlessGraph()
-        {
-            vertices = new List<Vertex>();
-            edges = new List<WeightlessEdge>();
-            id = WeightlessGraph.num;
-            WeightlessGraph.num++;
-        }
-
-        public int GetEdgeIndex(WeightlessEdge edg)
-        {
-            int index = 0;
-            foreach (var e in edges)
-            {
-                if (e == edg)
-                {
-                    return index;
-                }
-                index++;
-            }
-            return -1;
-        }
-
-        public bool IsEdgeInGraph(WeightlessEdge edg)
-        {
-            foreach (var e in edges)
-            {
-                if ((e.v1 == edg.v1 || e.v1 == edg.v2) && (e.v2 == edg.v1 || e.v2 == edg.v2))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void AddEdge(WeightlessEdge edg)
-        {
-            if (GetEdgeIndex(edg) == -1)
-            {
-                if (!IsEdgeInGraph(edg))
-                {
-                    edges.Add(edg);
-                    AddVertex(edg.v1);
-                    AddVertex(edg.v2);
-                    edg.v1.AddAdjacent(edg.v2);
-                    edg.v2.AddAdjacent(edg.v1);
-                }
-            }
-        }
-
-        public void RemoveEdge(WeightlessEdge edg)
-        {
-            int index = GetEdgeIndex(edg);
-            if (index != -1)
-            {
-                edges.RemoveAt(index);
-            }
-        }
-
-        public void RemoveVertex(Vertex ver)
-        {
-            int index = GetVertexIndex(ver);
-            if (index != -1)
-            {
-                foreach (var e in edges)
-                {
-                    if (e.v1 == ver || e.v2 == ver)
-                    {
-                        RemoveEdge(e);
-                    }
-                }
-                vertices.RemoveAt(index);
-            }
-        }
-    }
-
-    public class WeightlessDirectedGraph : WeightlessGraph
-    {
-        public WeightlessDirectedGraph()
-        {
-            vertices = new List<Vertex>();
-            edges = new List<WeightlessEdge>();
-            id = WeightlessDirectedGraph.num;
-            WeightlessDirectedGraph.num++;
-        }
-
-        public new bool IsEdgeInGraph(WeightlessEdge edg)
-        {
-            foreach(var e in edges)
-            {
-                if(e.v1 == edg.v1 && e.v2 == edg.v2)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public new void AddEdge(WeightlessEdge edg)
-        {
-            if (GetEdgeIndex(edg) == -1)
-            {
-                if (!IsEdgeInGraph(edg))
-                {
-                    edges.Add(edg);
-                    AddVertex(edg.v1);
-                    AddVertex(edg.v2);
-                    edg.v1.AddAdjacent(edg.v2);
-                }
-            }
-        }
-
-    }
-
-    public class WeightedGraph : Graph
-    {
-        public new List<WeightedEdge> edges { get; set; }
-
-        public WeightedGraph()
+        public DirectedGraph()
         {
             vertices = new List<Vertex> ();
-            edges = new List<WeightedEdge> ();
-            id = WeightedGraph.num;
-            WeightedGraph.num++;
+            edges = new List<Edge> ();
+            id = Graph.num;
+            Graph.num++;
         }
 
-        public int GetEdgeIndex(WeightedEdge edg)
-        {
-            int index = 0;
-            foreach (var e in edges)
-            {
-                if (e == edg)
-                {
-                    return index;
-                }
-                index++;
-            }
-            return -1;
-        }
-
-        public void RemoveEdge(WeightedEdge edg)
-        {
-            int index = GetEdgeIndex(edg);
-            if (index != -1)
-            {
-                edges.RemoveAt(index);
-            }
-        }
-
-        public bool IsEdgeInGraph(WeightedEdge edg)
-        {
-            foreach (var e in edges)
-            {
-                if ((e.v1 == edg.v1 || e.v1 == edg.v2) && (e.v2 == edg.v1 || e.v2 == edg.v2))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void AddEdge(WeightedEdge edg)
-        {
-            if (GetEdgeIndex(edg) == -1)
-            {
-                if (!IsEdgeInGraph(edg))
-                {
-                    edges.Add(edg);
-                    AddVertex(edg.v1);
-                    AddVertex(edg.v2);
-                    edg.v1.AddAdjacent(edg.v2);
-                    edg.v2.AddAdjacent(edg.v1);
-                }
-            }
-        }
-
-        public void RemoveVertex(Vertex ver)
-        {
-            int index = GetVertexIndex(ver);
-            if (index != -1)
-            {
-                foreach (var e in edges)
-                {
-                    if (e.v1 == ver || e.v2 == ver)
-                    {
-                        RemoveEdge(e);
-                    }
-                }
-                vertices.RemoveAt(index);
-            }
-        }
-    }
-
-    public class WeightedDirectedGraph : WeightedGraph
-    {
-        public WeightedDirectedGraph()
-        {
-            vertices = new List<Vertex> ();
-            edges = new List<WeightedEdge> ();
-            id = WeightedDirectedGraph.num;
-            WeightedDirectedGraph.num++;
-        }
-
-        public new bool IsEdgeInGraph(WeightedEdge edg)
+        public new bool IsEdgeInGraph(Edge edg)
         {
             foreach (var e in edges)
             {
@@ -288,7 +158,7 @@ namespace Graphs
             return false;
         }
 
-        public new void AddEdge(WeightedEdge edg)
+        public new void AddEdge(Edge edg)
         {
             if (GetEdgeIndex(edg) == -1)
             {

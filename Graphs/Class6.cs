@@ -23,10 +23,10 @@ namespace Graphs
         }
 
         protected List<BFElement> elements {  get; set; }
-        protected WeightedDirectedGraph graph { get; set; }
+        protected DirectedGraph graph { get; set; }
         protected Vertex startvertex { get; set; }
 
-        public BellmanFord(WeightedDirectedGraph _graph, Vertex _startvertex)
+        public BellmanFord(DirectedGraph _graph, Vertex _startvertex)
         {
             elements = new List<BFElement>();
             graph = _graph;

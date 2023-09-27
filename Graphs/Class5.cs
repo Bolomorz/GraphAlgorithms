@@ -27,10 +27,10 @@ namespace Graphs
 
         protected List<DijkstraElement> elements { get; set; }
         protected List<Vertex> Q { get; set; }
-        protected WeightedDirectedGraph graph { get; set; }
+        protected DirectedGraph graph { get; set; }
         protected Vertex startvertex { get; set; }
 
-        public Dijkstra(WeightedDirectedGraph _graph, Vertex _startvertex)
+        public Dijkstra(DirectedGraph _graph, Vertex _startvertex)
         {
             graph = _graph;
             Q = new List<Vertex>();
