@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -148,7 +149,7 @@ namespace Graphs
             var path = new List<Vertex>();
             path.Add(v);
             var u = v;
-            var index = IndexOfVertexInElements(u);
+            var index = IndexOfVertexInElements(v);
             while (true)
             {
                 if (elements[index].predecessor is null)
