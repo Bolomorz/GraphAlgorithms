@@ -8,6 +8,9 @@ namespace Graphs
 {
     public interface IGraph
     {
+        public List<Vertex> vertices { get; set; }
+        public List<Edge> edges { get; set; }
+        public int id { get; set; }
         int GetVertexIndex(Vertex ver);
         void AddVertex(Vertex ver);
         int GetEdgeIndex(Edge edg);
