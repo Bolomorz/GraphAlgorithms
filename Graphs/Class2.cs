@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Graphs
 {
+    [DataContract(Name = "pos", IsReference = true)]
     public class Position
     {
+        [DataMember]
         public int x;
+        [DataMember]
         public int y;
         
         public Position()

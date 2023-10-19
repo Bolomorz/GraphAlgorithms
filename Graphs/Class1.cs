@@ -1,11 +1,18 @@
-﻿namespace Graphs
+﻿using System.Runtime.Serialization;
+using System.Xml;
+
+namespace Graphs
 {
+    [DataContract(Name = "Vertex", IsReference = true)]
     public class Vertex
     {
+        [DataMember]
         public string name {  get; set; }
+        [DataMember]
         public Position position { get; set; }
+        [DataMember]
         public int id { get; set; }
-
+        [DataMember]
         public List<Vertex> adjacents { get; set; }
 
         protected static int num = 0;

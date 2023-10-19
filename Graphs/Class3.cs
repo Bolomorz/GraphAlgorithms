@@ -4,16 +4,24 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Graphs
 {
+    [DataContract(Name = "Edge", IsReference = true)]
     public class Edge
     {
+        [DataMember]
         public Vertex v1 {  get; set; }
+        [DataMember]
         public Vertex v2 { get; set; }
+        [DataMember]
         public string name { get; set; }
+        [DataMember]
         public Position position { get; set; }
+        [DataMember]
         public int id { get; set; }
+        [DataMember]
         public double? weight { get; set; }
 
         protected static int num = 0;

@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Graphs
 {
     public interface IGraph
     {
-        public List<Vertex> vertices { get; set; }
-        public List<Edge> edges { get; set; }
-        public int id { get; set; }
         int GetVertexIndex(Vertex ver);
         void AddVertex(Vertex ver);
         int GetEdgeIndex(Edge edg);
@@ -20,12 +18,15 @@ namespace Graphs
         void RemoveVertex(Vertex ver);
 
     }
-
+    [DataContract(Name = "Graph", IsReference = true)]
     public abstract class AGraph : IGraph
     {
-        public List<Vertex> vertices { get; set; }
-        public List<Edge> edges { get; set; }
-        public int id { get; set; }
+        [DataMember]
+        public abstract List<Vertex> vertices { get; set; }
+        [DataMember]
+        public abstract List<Edge> edges { get; set; }
+        [DataMember]
+        public abstract int id { get; set; }
 
         public int GetVertexIndex(Vertex ver)
         {
@@ -91,8 +92,16 @@ namespace Graphs
         public abstract bool IsEdgeInGraph(Edge edg);
         public abstract void AddEdge(Edge edg);
     }
+
+    [DataContract(Name = "Graph", IsReference = true)]
     public class Graph : AGraph
     {
+        [DataMember]
+        public override List<Vertex> vertices { get; set; }
+        [DataMember]
+        public override List<Edge> edges { get; set; }
+        [DataMember]
+        public override int id { get; set; }
         protected static int num = 0;
 
         public Graph() 
@@ -157,8 +166,15 @@ namespace Graphs
         }
     }
 
+    [DataContract(Name = "Graph", IsReference = true)]
     public class DirectedGraph : AGraph
     {
+        [DataMember]
+        public override List<Vertex> vertices { get; set; }
+        [DataMember]
+        public override List<Edge> edges { get; set; }
+        [DataMember]
+        public override int id { get; set; }
         protected static int num = 0;
 
         public DirectedGraph()
